@@ -6,8 +6,10 @@ require 'sprockets/vue/style'
 require 'sprockets/vue/configure'
 module Sprockets
 
-  def self.configure
-    yield(Configure) if block_given?
+  module Vue
+    def self.configure
+      yield(Configure) if block_given?
+    end
   end
 
   if respond_to?(:register_transformer)
