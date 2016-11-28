@@ -1,4 +1,4 @@
-module Sprockets
+module Sprockets::Vue
   class Configure
 
     class_attribute :js_variable_name
