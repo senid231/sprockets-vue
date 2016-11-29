@@ -3,7 +3,7 @@ require 'sprockets/vue/version'
 require 'sprockets/vue/utils'
 require 'sprockets/vue/script'
 require 'sprockets/vue/style'
-require 'sprockets/vue/configure'
+require 'sprockets/vue/configuration'
 module Sprockets
 
   module Vue

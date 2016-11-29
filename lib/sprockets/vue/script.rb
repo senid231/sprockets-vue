@@ -2,20 +2,22 @@ require 'active_support/concern'
 require 'action_view'
 module Sprockets::Vue
   class Script
-    class << self
-      include ActionView::Helpers::JavaScriptHelper
 
-      SCRIPT_REGEX = Utils.node_regex('script')
-      TEMPLATE_REGEX = Utils.node_regex('template')
-      SCRIPT_COMPILES = {
-          'coffee' => ->(s, input) {
-            CoffeeScript.compile s, coffee_options(input)
-          },
-          'es6' => ->(s, input) {
-            Babel::Transpiler.transform s, babel_options(input)
-          },
-          nil => ->(s, _input) { {'js' => s} }
-      }
+    include ActionView::Helpers::JavaScriptHelper
+
+    SCRIPT_REGEX = Utils.node_regex('script')
+    TEMPLATE_REGEX = Utils.node_regex('template')
+    SCRIPT_COMPILES = {
+        'coffee' => ->(s, input) {
+          CoffeeScript.compile s, coffee_options(input)
+        },
+        'es6' => ->(s, input) {
+          Babel::Transpiler.transform s, babel_options(input)
+        },
+        nil => ->(s, _input) { {'js' => s} }
+    }
+
+    class << self
 
       def call(input)
         data = input[:data]
@@ -81,6 +83,7 @@ module Sprockets::Vue
         opts
       end
 
-    end
+    end # class << self
+
   end
 end
