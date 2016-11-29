@@ -7,8 +7,22 @@ require 'sprockets/vue/configure'
 module Sprockets
 
   module Vue
+    class << self
+      attr_writer :configuration
+    end
+
+    # allow to configure Sprockets::Vue
+    #
+    #   Sprockets::Vue.configure do |config|
+    #     config.js_variable_name = 'Qwe'
+    #   end
+    #
     def self.configure
-      yield(Configure) if block_given?
+      yield configuration if block_given?
+    end
+
+    def self.configuration
+      @configuration ||= Sprockets::Vue::Configuration.new
     end
   end
 

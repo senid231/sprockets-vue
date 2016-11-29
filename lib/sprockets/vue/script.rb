@@ -23,7 +23,7 @@ module Sprockets::Vue
         input[:cache].fetch([cache_key, input[:filename], data]) do
           script = SCRIPT_REGEX.match(data)
           template = TEMPLATE_REGEX.match(data)
-          var_name = Configure.js_variable_name
+          var_name = Sprockets::Vue.configuration.js_variable_name
           output = []
           map = nil
           if script
@@ -55,7 +55,12 @@ module Sprockets::Vue
       end
 
       def coffee_options(input)
-        {sourceMap: true, sourceFiles: [input[:filename]], no_wrap: true}
+        {
+            sourceMap: true,
+            sourceFiles: [input[:filename]],
+            no_wrap: true
+
+        }.merge(Sprockets::Vue.configuration.coffee_options)
       end
 
       def babel_options(input)
@@ -64,7 +69,8 @@ module Sprockets::Vue
             'moduleRoot' => nil,
             'filename' => input[:filename],
             'filenameRelative' => input[:environment].split_subpath(input[:load_path], input[:filename])
-        }
+
+        }.merge(Sprockets::Vue.configuration.babel_options)
 
         if opts['moduleIds'] && opts['moduleRoot']
           opts['moduleId'] ||= File.join(opts['moduleRoot'], input[:name])
